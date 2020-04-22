@@ -12,6 +12,7 @@ MAINTAINER superkojiman@techorganic.com
 
 ENV DEBIAN_FRONTEND noninteractive
 
+RUN sed -i s/archive.ubuntu.com/mirrors.tuna.tsinghua.edu.cn/g /etc/apt/sources.list 
 RUN dpkg --add-architecture i386
 RUN apt-get update && apt-get -y upgrade
 
@@ -99,12 +100,12 @@ RUN python3 -m pip install xortool
 # Install stuff from GitHub repos     #
 #-------------------------------------#
 # install radrare2
-RUN git clone https://github.com/radare/radare2.git /opt/radare2 && \
-    cd /opt/radare2 && \
-    git fetch --tags && \
-    git checkout $(git describe --tags $(git rev-list --tags --max-count=1)) && \
-    ./sys/install.sh  && \
-    make symstall
+# RUN git clone https://github.com/radare/radare2.git /opt/radare2 && \
+#     cd /opt/radare2 && \
+#     git fetch --tags && \
+#     git checkout $(git describe --tags $(git rev-list --tags --max-count=1)) && \
+#     ./sys/install.sh  && \
+#     make symstall
 
 # install villoc
 RUN git clone https://github.com/wapiflapi/villoc.git /opt/villoc 
@@ -118,15 +119,15 @@ RUN git clone https://github.com/zardus/preeny.git /opt/preeny && \
 RUN git clone https://github.com/niklasb/libc-database /opt/libc-database
 
 # install peda
-RUN git clone https://github.com/longld/peda.git /opt/peda
+# RUN git clone https://github.com/longld/peda.git /opt/peda
 
 # install gef
 RUN git clone https://github.com/hugsy/gef.git /opt/gef
 
 # install pwndbg
-RUN git clone https://github.com/pwndbg/pwndbg.git /opt/pwndbg && \
-    cd /opt/pwndbg && \
-    ./setup.sh
+# RUN git clone https://github.com/pwndbg/pwndbg.git /opt/pwndbg && \
+#     cd /opt/pwndbg && \
+#     ./setup.sh
 
 # install libseccomp
 RUN git clone https://github.com/seccomp/libseccomp.git /opt/libseccomp && \
