@@ -150,5 +150,6 @@ RUN gem install one_gadget
 # install seccomp-tools
 RUN gem install seccomp-tools
 
+COPY ./rc/* /root/
 
-ENTRYPOINT ["/bin/bash"]
+ENTRYPOINT ["/bin/zsh"]
