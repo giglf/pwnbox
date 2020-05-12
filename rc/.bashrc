@@ -24,10 +24,10 @@ ulimit -c unlimited
 #===================[ALIASES START HERE]===================#
 
 #_____[command aliases]__________ #
-alias ls='ls -GF'
-alias ll='ls -GFlatr'
+# alias ls='ls -GF'
+# alias ll='ls -GFlatr'
 
 # You're welcome
-function soocat {
-    socat tcp-l:${2},reuseaddr,fork EXEC:${1}
-}
+# function soocat {
+#     socat tcp-l:${2},reuseaddr,fork EXEC:${1}
+# }

@@ -1,2 +1,2 @@
 Configuration files go here. Eg: .bashrc, .gdbinit, .tmux.conf, etc...
-These will be copied to the container when `run.sh` is executed. 
+These will be copied to the container when `docker build`.
