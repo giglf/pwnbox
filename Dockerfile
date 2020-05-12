@@ -2,13 +2,13 @@
 # Dockerfile to build a container for binary reverse engineering #
 # and exploitation. Suitable for CTFs.                           #
 #                                                                #
-# See https://github.com/superkojiman/pwnbox for details.        #
+# See https://github.com/giglf/pwnbox for details.               #
 #                                                                #
-# To build: docker build -t superkojiman/pwnbox                  #
+# To build: docker build -t giglf/pwnbox                         #
 #----------------------------------------------------------------#
 
 FROM ubuntu:18.04
-MAINTAINER superkojiman@techorganic.com
+MAINTAINER lin.giglf@gmail.com
 
 ENV DEBIAN_FRONTEND noninteractive
 
@@ -68,7 +68,8 @@ RUN apt-get install -y \
     libc6-dbg:i386 \
     libncurses5:i386 \
     libstdc++6:i386 \
-    libc6-dev-i386
+    libc6-dev-i386 \
+    zsh
 
 RUN apt-get -y autoremove
 RUN apt-get clean && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
@@ -95,6 +96,10 @@ RUN python3 -m pip install --upgrade git+https://github.com/Gallopsled/pwntools.
 
 # install xortool
 RUN python3 -m pip install xortool
+
+# install rust
+RUN curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh
+
 
 #-------------------------------------#
 # Install stuff from GitHub repos     #
