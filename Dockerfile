@@ -69,7 +69,8 @@ RUN apt-get install -y \
     libncurses5:i386 \
     libstdc++6:i386 \
     libc6-dev-i386 \
-    zsh
+    zsh \ 
+    curl
 
 RUN apt-get -y autoremove
 RUN apt-get clean && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
@@ -81,25 +82,26 @@ RUN update-locale
 #-------------------------------------#
 # Install stuff from pip repos        #
 #-------------------------------------#
-RUN pip3 install r2pipe
-RUN pip3 install scapy
-RUN pip3 install python-constraint
-RUN pip3 install pycipher
-RUN pip3 install uncompyle6
-RUN pip3 install pipenv
-RUN pip3 install manticore[native]
-RUN pip3 install ropper
+RUN python3 -m pip install --upgrade pip
+# RUN pip3 config set global.index-url https://pypi.tuna.tsinghua.edu.cn/simple
+RUN pip3 install r2pipe \
+                 scapy \
+                 python-constraint \
+                 pycipher \
+                 uncompyle6 \
+                 pipenv \
+                 manticore[native] \
+                 ropper
 
 # install pwntools 3
-RUN python3 -m pip install --upgrade pip
 RUN python3 -m pip install --upgrade git+https://github.com/Gallopsled/pwntools.git@dev
 
 # install xortool
 RUN python3 -m pip install xortool
 
 # install rust
-RUN curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh
-
+RUN curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | bash -s -- -y 
+ENV PATH="/root/.cargo/bin:${PATH}"
 
 #-------------------------------------#
 # Install stuff from GitHub repos     #
@@ -111,6 +113,9 @@ RUN curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh
 #     git checkout $(git describe --tags $(git rev-list --tags --max-count=1)) && \
 #     ./sys/install.sh  && \
 #     make symstall
+
+# install oh-my-zsh
+RUN sh -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)"
 
 # install villoc
 RUN git clone https://github.com/wapiflapi/villoc.git /opt/villoc 
