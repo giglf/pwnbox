@@ -18,13 +18,13 @@ You can checkout to master for the original.
 
 ## Build
 
-`docker build -t giglf/pwnbox`
+`docker build -t giglf/pwnbox .`
 
 ## Usage
 
 ### First: create docker container
 
-`docker create -p 23946:23946 --cap-add=SYS_PTRACE --security-opt seccomp=unconfined -it -v ~/Workbench:/share --name="pwnbox" giglf/pwnbox /bin/zsh`
+`docker create -p 23946:23946 --cap-add=SYS_PTRACE --security-opt seccomp=unconfined -it -v ~/Workbench:/share --name="pwnbox" giglf/pwnbox`
 
 `-p 23946:23946`: Export 23946 port for host debugging executable in container using IDA.
 `--cap-add=SYS_PTRACE --security-opt seccomp=unconfined`: For gdb debugging in container. Check [https://stackoverflow.com/questions/35860527/warning-error-disabling-address-space-randomization-operation-not-permitted](https://stackoverflow.com/questions/35860527/warning-error-disabling-address-space-randomization-operation-not-permitted) for more information.
