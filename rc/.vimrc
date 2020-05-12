@@ -1,7 +1,7 @@
 syntax on
 set background=dark
 set grepprg=grep\ -nH\ $*
-color dracula
+" color dracula
 
 filetype plugin indent on
 
