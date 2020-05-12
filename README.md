@@ -1,41 +1,38 @@
-### About
+# About
+
 Pwnbox is a Docker container with tools for binary reverse engineering and exploitation. It's primarily geared towards Capture The Flag competitions. 
 
-### Installation
-You can grab the container from Docker Hub: `docker pull superkojiman/pwnbox`
- 1. Make sure you have Docker installed. For OS X users, you'll need to create a Docker machine. Pick one depending on your hypervisor:
+This branch is for lighter use of docker only through docker desktop.
 
-        # VMware Fusion
-        docker-machine create --driver vmwarefusion \
-            --vmwarefusion-disk-size 4000 \
-            --vmwarefusion-memory-size 1000 \
-            --vmwarefusion-no-share ctf
+Because docker machine has been removed from later versions of Docker Desktop. Your going to need the docker-toolbox package.
 
-        # VirtualBox
-        docker-machine create --driver virtualbox \
-            --virtualbox-disk-size 4000 \
-            --virtualbox-memory 1000 \
-            --virtualbox-no-share ctf
+[https://stackoverflow.com/questions/60078434/docker-machine-command-not-found](https://stackoverflow.com/questions/60078434/docker-machine-command-not-found)
 
- 1. Optional: Create a ./rc directory. Your custom configuration files in $HOME go here. Eg: .gdbinit, .radare2rc, .bashrc, .vimrc, etc. The contents of rc gets copied into /root on the container. 
- 1. Get the `run.sh` script from [https://raw.githubusercontent.com/superkojiman/pwnbox/master/run.sh](https://raw.githubusercontent.com/superkojiman/pwnbox/master/run.sh). 
- 1. Execute `run.sh` script which creates a container named `ctfname-ctf`. Eg:
+## Note
 
-        $ ./run.sh defcon
-        f383e644c0e2504f30487f1d658d8b61a66fca2bdb961fabb0277b05660f5367
-                                 ______
-        ___________      ___________  /___________  __
-        ___  __ \_ | /| / /_  __ \_  __ \  __ \_  |/_/
-        __  /_/ /_ |/ |/ /_  / / /  /_/ / /_/ /_>  <
-        _  .___/____/|__/ /_/ /_//_.___/\____//_/|_|
-        /_/                           by superkojiman
+This branch is for my own use. So i delete/modify many things so that he becomes what i like.
 
-        #
- 1. When you're ready to delete the container, use the `ctfname-ctf-stop.sh` script.
+You can checkout to master for the original.
 
-### Limitations
- 1. If you need to edit anything in /proc, you must edit `run.sh` to use the `--privileged` option to `docker` instead of `--security-opt seccomp:unconfined`. 
- 1. The container is designed to be isolated so no directories are mounted from the host. This allows you to have multiple containers hosting files from different CTFs. 
+∠( ᐛ 」∠)＿
+
+## Build
+
+`docker build -t giglf/pwnbox`
+
+## Usage
+
+### First: create docker container
+
+`docker create -p 23946:23946 --cap-add=SYS_PTRACE --security-opt seccomp=unconfined -it -v ~/Workbench:/share --name="pwnbox" giglf/pwnbox /bin/zsh`
+
+`-p 23946:23946`: Export 23946 port for host debugging executable in container using IDA.
+`--cap-add=SYS_PTRACE --security-opt seccomp=unconfined`: For gdb debugging in container. Check [https://stackoverflow.com/questions/35860527/warning-error-disabling-address-space-randomization-operation-not-permitted](https://stackoverflow.com/questions/35860527/warning-error-disabling-address-space-randomization-operation-not-permitted) for more information.
+`~/Workbench:/share`: Mount my workbench to `/shared` folder. So that I can access file in my host.
+
+### Second: run the container
+
+`docker start -ai pwnbox`
 
 
 ### Go forth, and CTF 
